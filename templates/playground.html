@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block choose %}
+utilizer: {{utilizer}}
+<p>
+purpose: {{purpose}}
+<p>
+consent: {{consent}}
+<form action="/playground", method="POST">
+  <div class="form-group">
+    <input class="form-control input-lg" type="text" name="newPermUti" id="newPermUti" placeholder="new utilizers (comma separated)"></input>
+    <input class="form-control input-lg" type="text" name="newPermPur" id="newPermPur" placeholder="new purposes (comma separated)"></input>
+    <input type="hidden" name="policy" id="policy" value=""></input>
+    <input type="submit" onclick="sendConsent()"></input>
+  </div>
+</form>
+<script type="text/javascript">
+ var consent = [];
+ var utilizer = [];
+ var purposes = [];
+ function sendConsent(){
+   var newUtis = (document.getElementById('newPermUti').value).split(",");
+   for (i = 0; i < newUtis.length; i++ ) {
+     nU = newUtis[i].trim();
+     utilizer.push(nU);
+   };
+   var newPurps = (document.getElementById('newPermPur').value).split(",");
+   for (i = 0; i < newPurps.length; i++ ) {
+     nP = newPurps[i].trim();
+     purposes.push(nP);
+   };
+   //consent.push(document.getElementById('newPermPur').value);
+   //consent.push(document.getElementById('newPermUti').value);
+   var newRule = {
+     'purpose': {
+       'permitted': purposes,
+     },
+     'utilizer': {
+       'permitted': utilizer,
+     }
+   }
+
+   var rule = JSON.stringify(newRule)
+   document.getElementById('policy').value = rule;
+   console.log(utilizer);
+ };
+</script>
+{% endblock %}

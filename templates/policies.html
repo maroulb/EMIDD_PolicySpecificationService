@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block choose %}
+<form action="/policies/", method="POST">
+  <div class="form-group">
+    <select class="form-control input-lg" name="id" id="sel1" onchange="this.form.submit()">
+      <option>Sensor?</option>
+      {% for ID in IDs %}
+      <option>{{ID}}</option>
+      {% endfor %}
+    </select>
+    <br>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "policies.html" %}
+{% block choose %}
+<form action="/policies/", method="POST">
+  <div class="form-group">
+    <!-- <label for="sel1">Select:</label> -->
+    <select class="form-control input-lg" name="id" id="sel1" onchange="this.form.submit()">
+      <option>Sensor?</option>
+      {% for ID in IDs %}
+      <option>{{ID}}</option>
+      {% endfor %}
+    </select>
+  </div>
+</form>
+{% endblock %}
+{% block details %}
+Sensor : {{ID}}
+{% for rule in rules %}
+<hr>
+<ul>
+  <li>Rule ID: {{rule.Id}}</li>
+  <li>Valid from: {{rule.Valid_From}}</li>
+  {% for n,r in rule.items() %}
+    {% if n == 'Purpose' %}
+    <li>Purpose:
+    <ul>
+      {% for n,p in r.items() %}
+        <li>{{n}}:
+          <ul>
+            {% for i in p %}
+              <li>{{i}}</li>
+            {% endfor %}
+          </ul></li>
+      {% endfor %}
+    </ul></li>
+    {% elif n == 'Utilizer' %}
+    <li>Utilizer:
+    <ul>
+      {% for n,u in r.items() %}
+        <li>{{n}}:<ul>
+          {% for i in u %}
+            <li>{{i}}</li>
+          {% endfor %}
+        </ul></li>
+      {% endfor %}
+    </ul></li>
+    {% elif n == 'Transformation'%}
+    <li>Transformation:
+    <ul>
+      {% for tr in r %}
+        {% for n,t in tr.items() %}
+          <li>{{n}}: {{t}}</li>
+        {% endfor %}
+      {% endfor %}
+    </ul></li>
+    {% else %}
+    {% endif %}
+  {% endfor%}
+  <li>Expiration date: {{rule.Exp_Date}}</li>
+</ul>
+{% if rule.Exp_Date == '0000-00-00T00:00:00.00Z' %}
+<form action="/policies/update", method="POST">
+  <div>
+    <button type="submit" class="btn btn-warning" name="updateButton" value={{ID}},{{rule.Id}}>Update</button>
+  </div>
+</form>
+{% endif %}
+{% endfor %}
+<hr>
+{% endblock %}
+{% block new %}
+<form action="/policies/create", method="POST">
+  <div>
+    <button type="submit" class="btn btn-success" style="margin-bottom:10px" name="newRule" value={{ID}}>New Rule</button>
+  </div>
+</form>
+{% endblock %}

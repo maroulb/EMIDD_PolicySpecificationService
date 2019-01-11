@@ -1,0 +1,30 @@
+<!doctype html>
+<title>MyPolicies</title>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-treeview.css" rel="stylesheet"><link href="/static/css/custom.css" rel="stylesheet">
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/bootstrap-treeview.js"></script>
+</head>
+<body>
+  <font size="4">
+  <div class="container">
+    <div class="">
+    <div id="header">
+        <h1>MyPolicies&#x1F4CB</h1>
+    </div>
+    <div id="choose">
+      {% block choose %}{% endblock %}
+    </div>
+    <div id="details">
+      {% block details %}{% endblock %}
+    </div>
+    <div id="new">
+      {% block new %}{% endblock %}
+    </div>
+  </div>
+  </div>
+  </font>
+</body>

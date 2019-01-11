@@ -1,0 +1,227 @@
+{% extends "layout.html" %}
+{% block choose %}
+
+Sensor: {{polID}}
+<p>
+Regel-ID: {{ruleID}}
+<hr>
+{% endblock %}
+{% block details %}
+ausgeschlossene Verwender:
+<div id="exclUtiTree" class="tree"></div>
+<div>
+    <input class="form-control input-lg" type="text" id="newExUti" name="newExUti" placeholder="neue Verwender (durch Komma getrennt)"></input>
+</div>
+ausgeschlossene Zwecke:
+<div id="exclPurTree" class="tree"></div>
+<div>
+    <input class="form-control input-lg" type="text" id="newExPur" name="newExPur" placeholder="neue Zwecke (durch Komma getrennt)" ></input>
+</div>
+<hr>
+erlaubte Verwender:
+<div id="permUtiTree" class="tree">
+</div>
+<div>
+    <input class="form-control input-lg" type="text" id="newPermUti" name="newPermUti" placeholder="neue Verwender (durch Komma getrennt)"></input>
+</div>
+erlaubte Zwecke:
+<div id="permPurTree" class="tree">
+</div>
+<div>
+    <input class="form-control input-lg" type="text" id="newPermPur" name="newPermPur" placeholder="neue Zwecke (durch Komma getrennt)"></input>
+</div>
+Transformation:
+<div id="transTree" class="tree"></div>
+<hr>
+<div id="send2server">
+  <form action="/policies/verify", method="POST">
+    <div class="form-group">
+      <input type="hidden" name="createdRule" id="createdRule" value="" ></input>
+      <button type="submit" class="btn btn-success input-lg" style="margin-bottom:10px" onclick="saveRule()" name="newRuleButton" value={{polID}},{{ruleID}} >Erzeuge Regel</button>
+    </div>
+  </form>
+</div>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+<script type="text/javascript">
+  var permPurposeTree = {{ purTree|tojson }};
+  var exclPurposeTree = {{ purTree|tojson }};
+  var permUtilizerTree = {{ utiTree|tojson }};
+  var exclUtilizerTree = {{ utiTree|tojson }};
+  var tranTree = {{ traTree|tojson }};
+  var permPur = [];
+  var exclPur = [];
+  var permUti = [];
+  var exclUti = [];
+  var trans = [];
+
+  var newRule = {
+    'purpose': {
+      'permitted': permPur,
+      'excluded': exclPur
+    },
+    'utilizer': {
+      'permitted': permUti,
+      'excluded': exclUti
+    },
+    'transformation': trans
+  }
+
+  function saveRule(){
+    var newExUtis = document.getElementById('newExUti').value;
+    if (newExUtis.length > 0) {
+      newExUtis = newExUtis.split(",");
+      for (i = 0; i < newExUtis.length; i++ ) {
+        nU = newExUtis[i].trim();
+        exclUti.push(nU);
+      }
+    };
+    var newExPurps = document.getElementById('newExPur').value;
+    if (newExPurps.length > 0) {
+      newExPurps = newExPurps.split(",");
+      for (i = 0; i < newExPurps.length; i++ ) {
+        nP = newExPurps[i].trim();
+        exclPur.push(nP);
+      }
+    };
+    var newPerUtis = document.getElementById('newPermUti').value;
+    if (newPerUtis.length > 0) {
+      newPerUtis = newPerUtis.split(",");
+      for (i = 0; i < newPerUtis.length; i++ ) {
+        var nU = newPerUtis[i].trim();
+        permUti.push(nU);
+      }
+     };
+    var newPerPurps = document.getElementById('newPermPur').value;
+    if (newPerPurps.length > 0) {
+      newPerPurps = newPerPurps.split(",");
+      for (i = 0; i < newPerPurps.length; i++ ) {
+        nP = newPerPurps[i].trim();
+        permPur.push(nP);
+      }
+    };
+    var rule = JSON.stringify(newRule);
+    document.getElementById('createdRule').value = rule;
+    alert(JSON.stringify(newRule));
+  };
+
+	$(function() {
+    $('#permPurTree').treeview({
+      data: permPurposeTree,
+      multiSelect: true,
+      collapseIcon: 'glyphicon glyphicon-chevron-down',
+      expandIcon: 'glyphicon glyphicon-chevron-right',
+      showTip: true,
+      onhoverColor: '#EAFAF1',
+      selectedBackColor: '#82E0AA',
+      levels: 1,
+      onNodeSelected: function(event, node) {
+          if (permPur.indexOf(node.text) === -1) {
+            permPur.push(node.text);
+          };
+        // TODO: if (node is Parent) {select all children};
+      },
+      onNodeUnselected: function(event, node) {
+          if (permPur.indexOf(node.text) > -1) {
+            permPur.splice(permPur.indexOf(node.text),1);
+          };
+      }
+    });
+	});
+
+  $(function() {
+    $('#exclPurTree').treeview({
+      data: exclPurposeTree,
+      multiSelect: true,
+      collapseIcon: 'glyphicon glyphicon-chevron-down',
+      expandIcon: 'glyphicon glyphicon-chevron-right',
+      showTip: true,
+      onhoverColor: '#FDEDEC',
+      selectedBackColor: '#F1948A',
+      levels: 1,
+      onNodeSelected: function(event, node) {
+          if (exclPur.indexOf(node.text) === -1) {
+            exclPur.push(node.text);
+          };
+        // TODO: if (node is Parent) {select all children};
+      },
+      onNodeUnselected: function(event, node) {
+          if (exclPur.indexOf(node.text) > -1) {
+            exclPur.splice(exclPur.indexOf(node.text),1);
+          };
+      }
+    })
+	});
+  $(function() {
+    $('#permUtiTree').treeview({
+      data: permUtilizerTree,
+      multiSelect: true,
+      collapseIcon: 'glyphicon glyphicon-chevron-down',
+      expandIcon: 'glyphicon glyphicon-chevron-right',
+      showTip: true,
+      onhoverColor: '#EAFAF1',
+      selectedBackColor: '#82E0AA',
+      levels: 1,
+      onNodeSelected: function(event, node) {
+          if (permUti.indexOf(node.text) === -1) {
+            permUti.push(node.text);
+          };
+        // TODO: if (node is Parent) {select all children};
+      },
+      onNodeUnselected: function(event, node) {
+          if (permUti.indexOf(node.text) > -1) {
+            permUti.splice(permUti.indexOf(node.text),1);
+          };
+      }
+    });
+	});
+  $(function() {
+    $('#exclUtiTree').treeview({
+      data: exclUtilizerTree,
+      multiSelect: true,
+      collapseIcon: 'glyphicon glyphicon-chevron-down',
+      expandIcon: 'glyphicon glyphicon-chevron-right',
+      showTip: true,
+      onhoverColor: '#FDEDEC',
+      selectedBackColor: '#F1948A',
+      levels: 1,
+      onNodeSelected: function(event, node) {
+          if (exclUti.indexOf(node.text) === -1) {
+            exclUti.push(node.text);
+          };
+        // TODO: if (node is Parent) {select all children};
+      },
+      onNodeUnselected: function(event, node) {
+          if (exclUti.indexOf(node.text) > -1) {
+            exclUti.splice(exclUti.indexOf(node.text),1);
+          };
+      }
+    });
+	});
+  $(function() {
+    $('#transTree').treeview({
+      data: tranTree,
+      multiSelect: false,
+      collapseIcon: 'glyphicon glyphicon-chevron-down',
+      expandIcon: 'glyphicon glyphicon-chevron-right',
+      selectedBackColor: '#CCD1D1',
+      levels: 1,
+      onNodeSelected: function(event, node) {
+          if (trans.indexOf(node.text) === -1) {
+            trans.push(node.text);
+          };
+        // TODO: if (node is Parent) {select all children};
+      },
+      onNodeUnselected: function(event, node) {
+          if (trans.indexOf(node.text) > -1) {
+            trans.splice(trans.indexOf(node.text),1);
+            console.log(trans);
+          };
+      }
+    });
+	});
+</script>
+{% endblock %}

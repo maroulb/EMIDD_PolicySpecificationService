@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block details %}
+Sensor: {{ ID }}
+<p>
+Rule-ID: {{ ruleId }}
+<p>
+{% for rule in rules %}
+<hr>
+<ul>
+  {% for n,r in rule.items() %}
+    {% if n == 'purpose' %}
+    <li>Purpose:
+    <ul>
+      {% for n,p in r.items() %}
+        <li>{{n}}:
+          <ul>
+            {% for i in p %}
+              <li>{{i}}</li>
+            {% endfor %}
+          </ul></li>
+      {% endfor %}
+    </ul></li>
+    {% elif n == 'utilizer' %}
+    <li>Utilizer:
+    <ul>
+      {% for n,u in r.items() %}
+        <li>{{n}}:<ul>
+          {% for i in u %}
+            <li>{{i}}</li>
+          {% endfor %}
+        </ul></li>
+      {% endfor %}
+    </ul></li>
+    {% elif n == 'transformation'%}
+    <li>Transformation:
+    <ul>
+      {% for tr in r %}
+        <li>{{tr}}</li>
+      {% endfor %}
+    </ul></li>
+    {% else %}
+    {% endif %}
+  {% endfor%}
+</ul>
+<hr>
+<form action="/policies/verified", method="POST">
+  <div>
+    <button type="submit" class="btn btn-warning" name="cancelButton" style="margin-bottom:10px" value={{ID}},{{ruleId}}>Cancel</button>
+    <input type="hidden" id="createdRule" name="createdRule" value=""></input>
+    <button type="submit" class="btn btn-success" name="confirmButton" style="margin-bottom:10px" onclick="confirmRuleCreation()" value={{ID}},{{ruleId}}>Confirm</button>
+  </div>
+</form>
+<script type="text/javascript">
+//var policyId = '{{ ID }}';
+//var ruleId = '{{ ruleId }}';
+var rule = {{ rule|tojson }};
+
+function confirmRuleCreation() {
+  document.getElementById('createdRule').value = JSON.stringify(rule);
+};
+</script>
+{% endfor %}
+{% endblock %}

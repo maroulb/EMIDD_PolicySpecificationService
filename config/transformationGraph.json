@@ -1,0 +1,9 @@
+{
+"Ohne Einschraenkung": ["Durchschnitt", "MinMax"],
+"Durchschnitt": ["Stunde", "Tag", "Woche", "Monat"],
+"MinMax": ["Stunde", "Tag", "Woche", "Monat"],
+"Stunde": [],
+"Tag": [],
+"Woche": [],
+"Monat": []
+}

@@ -1,0 +1,21 @@
+{
+"Alles": ["kommerziell", "nicht kommerziell"],
+"kommerziell": ["komm. Forschung", "komm. Statistik", "komm. Dienstleistung"],
+"nicht kommerziell": ["nicht komm. Forschung", "nicht komm. Statistik", "nicht komm. Dienstleistung"],
+"komm. Forschung": ["komm. Gesundheitsforschung", "komm. Klimaforschung", "komm. Stadtplanung"],
+"komm. Statistik": [],
+"komm. Dienstleistung": ["komm. Wettervorhersage", "komm. Routenempfehlung"],
+"nicht komm. Forschung": ["nicht komm. Gesundheitsforschung", "nicht komm. Klimaforschung", "nicht komm. Stadtplanung"],
+"nicht komm. Statistik": [],
+"nicht komm. Dienstleistung": ["nicht komm. Wettervorhersage", "nicht komm. Routenempfehlung"],
+"komm. Gesundheitsforschung": [],
+"komm. Klimaforschung": [],
+"komm. Stadtplanung": [],
+"komm. Wettervorhersage": [],
+"komm. Routenempfehlung": [],
+"nicht komm. Gesundheitsforschung": [],
+"nicht komm. Klimaforschung": [],
+"nicht komm. Stadtplanung": [],
+"nicht komm. Wettervorhersage": [],
+"nicht komm. Routenempfehlung": []
+}

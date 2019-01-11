@@ -1,0 +1,28 @@
+{% for policy in policies %}
+ <ol>
+    <li>_id: {{policy._id}}</li>
+    <li>{{policy.preference}}
+    {% for preference in policy.preferences %}
+    <ul>
+      <le>{{preference.purpose}}</le>
+    </ul>
+    {% endfor %}
+
+    <li>{{policy.preference[policy]}}</li>
+    <li>{{policy.transformation}}</li>
+    <li>{{policy.exp_date}}</li>
+  </ol>
+  {% endfor %}
+  <table class="table table-striped">
+    <tr>
+      <th>_id</th>
+      <th>Preference</th>
+
+    </tr>
+    {% for policy in policies %}
+    <tr>
+      <td>{{policy._id}}</td>
+      <td>{{policy.preference}}</td>
+    </tr>
+    {% endfor %}
+  </table>
