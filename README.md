@@ -1,7 +1,7 @@
 # Spezifikationsservice
 _Proof-of-Concept_ Implementierung der _Spezifikationsservice_ -Komponente der _Privacy Proxy_ Architektur.
 
-Es handelt sich um ...
+Es handelt sich um ... tbd.
 
 ## Nutzung
 
@@ -11,8 +11,8 @@ a) lokale Ausführung
 
 b) Ausführung als Cloud-Service
 
-### Lokale Ausführung
-Es wird die Nutzng einer vituellen Umgebung [(_virtualenv_)](https://www.dpunkt.de/common/leseproben//12951/2_Ihre%20Entwicklungsumgebung.pdf#page=15) empfohlen.
+###  a) Lokale Ausführung
+Es wird die Nutzung einer vituellen Umgebung [(_virtualenv_)](https://www.dpunkt.de/common/leseproben//12951/2_Ihre%20Entwicklungsumgebung.pdf#page=15) empfohlen.
 
     >> pip install -r requirements.txt
 
@@ -26,7 +26,6 @@ Hinweis: Verzeichnis mit folgender Struktur:
     |   `-- utilizerGraph.json
     |-- static
     |   |-- css
-    |   |   |-- bootstrap-select.css
     |   |   |-- bootstrap-treeview.css
     |   |   |-- bootstrap.css
     |   |   `-- custom.css
@@ -37,7 +36,6 @@ Hinweis: Verzeichnis mit folgender Struktur:
     |   |   |-- glyphicons-halflings-regular.woff
     |   |   `-- glyphicons-halflings-regular.woff2
     |   `-- js
-    |       |-- bootstrap-select.js
     |       |-- bootstrap-treeview.js
     |       |-- bootstrap.js
     |       `-- jquery.js
@@ -50,3 +48,7 @@ Hinweis: Verzeichnis mit folgender Struktur:
     |-- README.md
     |-- YaPPL_schema.json    
     `-- yappl.py
+
+### b) Ausführung als Cloud Service
+
+tbd.
